@@ -1,0 +1,46 @@
+# Build
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Publicação / deploy
+publish/
+**/publish/
+
+# Logs e temporários
+*.log
+*.tmp
+*.temp
+*.cache
+Thumbs.db
+.DS_Store
+
+# Secrets e configurações locais
+appsettings.local.json
+appsettings.*.local.json
+secrets.json
+*.pfx
+*.p12
+
+# Docs internos (specs, planos, diagramas de trabalho)
+docs/

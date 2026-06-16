@@ -1,50 +1,65 @@
-# 🎬 Catálogo de Filmes e Séries
+# Catálogo de Filmes e Séries
 
 ## Integrantes
 
-* Bernardo Maia Lomas Ameno
-* Daniel Meireles Aquino Jorge
-* Lucas Gabriel Adelino Araújo
-* Matheus Henrique Borges Ferreira
+- Bernardo Maia Lomas Ameno
+- Daniel Meireles Aquino Jorge
+- Lucas Gabriel Adelino Araújo
+- Matheus Henrique Borges Ferreira
 
 ## Descrição
 
-O projeto consiste no desenvolvimento de um sistema de catálogo de filmes e séries utilizando os conceitos de Programação Orientada a Objetos (POO).
+Sistema de catálogo de filmes e séries desenvolvido como Trabalho Prático da disciplina de Programação Orientada a Objetos. O sistema permite gerenciar e consultar obras audiovisuais, expondo informações como título, gênero, ano de lançamento e avaliações.
 
-O sistema permitirá o gerenciamento e a consulta de obras audiovisuais, possibilitando a visualização de informações como título, gênero, ano de lançamento, avaliações e demais características específicas de filmes e séries.
+O projeto aplica os quatro pilares da POO:
 
-O principal objetivo do projeto é aplicar os quatro pilares da Programação Orientada a Objetos:
+- **Abstração** — entidades de domínio representam obras do mundo real
+- **Encapsulamento** — estado interno protegido por propriedades e serviços
+- **Herança** — `Filme` e `Serie` herdam de uma base comum `Obra`
+- **Polimorfismo** — comportamentos específicos sobrescritos em cada subclasse
 
-* Abstração
-* Encapsulamento
-* Herança
-* Polimorfismo
+## Funcionalidades
 
-## Funcionalidades Previstas
-
-* Cadastro de filmes
-* Cadastro de séries
-* Consulta de obras cadastradas
-* Pesquisa por título
-* Filtragem por gênero
-* Gerenciamento de favoritos
-* Exibição de detalhes das obras
+- Cadastro de filmes e séries
+- Consulta e listagem de obras
+- Pesquisa por título
+- Filtragem por gênero
+- Gerenciamento de favoritos
+- Exibição de detalhes da obra
 
 ## Tecnologias
 
-* Java
-* Programação Orientada a Objetos
-* JSON para armazenamento de dados
-* Git e GitHub para versionamento
+- **C# / ASP.NET Core** — API REST
+- **Programação Orientada a Objetos**
+- **.NET** (runtime e SDK)
+- **Git e GitHub** — versionamento
 
-## Estrutura Inicial do Projeto
+## Estrutura do Projeto
 
-* `Obra` (classe abstrata)
-* `Filme`
-* `Serie`
-* `Usuario`
-* `Catalogo`
+```
+catalogo-filmes-series/
+├── src/
+│   └── catalogo-api/
+│       ├── Api/              # Controllers, DTOs, Middleware
+│       ├── Application/      # Interfaces e Services
+│       ├── Domain/           # Entidades, Enums, Exceptions
+│       └── Infrastructure/   # Repositories
+└── tests/                    # Testes automatizados
+```
 
-## Repositório
+### Entidades principais
 
-Repositório criado para a disciplina de Programação Orientada a Objetos como parte do Trabalho Prático.
+- `Obra` — classe base abstrata
+- `Filme` — herda de Obra
+- `Serie` — herda de Obra
+- `Usuario`
+- `Catalogo`
+
+## Como executar
+
+```bash
+cd src/catalogo-api
+dotnet run
+```
+
+A API estará disponível em `https://localhost:5001` (ou conforme `appsettings.json`).

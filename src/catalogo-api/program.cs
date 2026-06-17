@@ -11,6 +11,10 @@ using Microsoft.OpenApi.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -49,6 +53,7 @@ WebApplication app = builder.Build();
 
 SeedData(app);
 
+app.UseCors();
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseSwagger();

@@ -42,5 +42,10 @@ secrets.json
 *.pfx
 *.p12
 
+# Node
+node_modules/
+dist/
+.env.local
+
 # Docs internos (specs, planos, diagramas de trabalho)
 docs/

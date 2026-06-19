@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Film } from 'lucide-react'
+import { Film, User } from 'lucide-react'
 import { listarCatalogo, buscarPorTitulo } from '../api/catalogo'
+import { listarUsuarios, obterFavoritos, adicionarFavorito, removerFavorito } from '../api/usuarios'
 import { useDebounce } from '../hooks/useDebounce'
-import type { ObraResumo, Genero } from '../types'
+import type { ObraResumo, Genero, Usuario } from '../types'
 import ObraCard from '../components/ObraCard'
 import SearchBar from '../components/SearchBar'
 import FilterChips from '../components/FilterChips'
 import SkeletonCard from '../components/SkeletonCard'
 import EmptyState from '../components/ui/EmptyState'
+import { useToast } from '../contexts/ToastContext'
 
 export default function Catalogo() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -16,8 +18,12 @@ export default function Catalogo() {
   const [tipo, setTipo] = useState('')
   const [genero, setGenero] = useState<Genero | ''>('')
   const [obras, setObras] = useState<ObraResumo[]>([])
+  const [usuarios, setUsuarios] = useState<Usuario[]>([])
+  const [usuarioId, setUsuarioId] = useState('')
+  const [favoritosIds, setFavoritosIds] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const debouncedSearch = useDebounce(search, 300)
+  const { showToast } = useToast()
 
   useEffect(() => {
     const q = searchParams.get('search')
@@ -25,15 +31,54 @@ export default function Catalogo() {
   }, [searchParams])
 
   useEffect(() => {
+    listarUsuarios()
+      .then(lista => {
+        setUsuarios(lista)
+
+        const usuarioSalvo = localStorage.getItem('cinelog_usuario_ativo')
+        const usuarioExiste = lista.some(u => u.id === usuarioSalvo)
+
+        if (usuarioSalvo && usuarioExiste) {
+          setUsuarioId(usuarioSalvo)
+        } else if (lista.length > 0) {
+          setUsuarioId(lista[0].id)
+          localStorage.setItem('cinelog_usuario_ativo', lista[0].id)
+        }
+      })
+      .catch(() => {
+        setUsuarios([])
+      })
+  }, [])
+
+  useEffect(() => {
     setLoading(true)
+
     const req = debouncedSearch.trim()
       ? buscarPorTitulo(debouncedSearch)
       : listarCatalogo(tipo || undefined, genero || undefined)
+
     req
       .then(setObras)
       .catch(() => setObras([]))
       .finally(() => setLoading(false))
   }, [debouncedSearch, tipo, genero])
+
+  useEffect(() => {
+    if (!usuarioId) {
+      setFavoritosIds([])
+      return
+    }
+
+    localStorage.setItem('cinelog_usuario_ativo', usuarioId)
+
+    obterFavoritos(usuarioId)
+      .then(favoritos => {
+        setFavoritosIds(favoritos.map(f => f.id))
+      })
+      .catch(() => {
+        setFavoritosIds([])
+      })
+  }, [usuarioId])
 
   const handleSearch = (v: string) => {
     setSearch(v)
@@ -41,9 +86,49 @@ export default function Catalogo() {
     else setSearchParams({})
   }
 
-  const handleTipo = (t: string) => { setTipo(t); setSearch(''); setSearchParams({}) }
-  const handleGenero = (g: Genero | '') => { setGenero(g); setSearch(''); setSearchParams({}) }
-  const handleClear = () => { setSearch(''); setTipo(''); setGenero(''); setSearchParams({}) }
+  const handleTipo = (t: string) => {
+    setTipo(t)
+    setSearch('')
+    setSearchParams({})
+  }
+
+  const handleGenero = (g: Genero | '') => {
+    setGenero(g)
+    setSearch('')
+    setSearchParams({})
+  }
+
+  const handleClear = () => {
+    setSearch('')
+    setTipo('')
+    setGenero('')
+    setSearchParams({})
+  }
+
+  const handleToggleFavorito = async (obraId: string) => {
+    if (!usuarioId) {
+      showToast('Cadastre ou selecione um usuário antes de favoritar.', 'error')
+      return
+    }
+
+    const jaEhFavorito = favoritosIds.includes(obraId)
+
+    try {
+      if (jaEhFavorito) {
+        await removerFavorito(usuarioId, obraId)
+        setFavoritosIds(prev => prev.filter(id => id !== obraId))
+        showToast('Removido dos favoritos.', 'info')
+      } else {
+        await adicionarFavorito(usuarioId, obraId)
+        setFavoritosIds(prev => [...prev, obraId])
+        showToast('Adicionado aos favoritos.', 'success')
+      }
+    } catch {
+      showToast('Erro ao atualizar favorito.', 'error')
+    }
+  }
+
+  const usuarioAtual = usuarios.find(u => u.id === usuarioId)
 
   return (
     <div>
@@ -75,6 +160,38 @@ export default function Catalogo() {
 
       {/* Grid */}
       <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
+          <div>
+            <p className="text-cinema-muted text-xs">
+              {obras.length} obra{obras.length !== 1 ? 's' : ''} encontrada{obras.length !== 1 ? 's' : ''}
+            </p>
+            {usuarioAtual && (
+              <p className="text-cinema-muted text-xs mt-1">
+                Favoritando como: <span className="text-cinema-gold">{usuarioAtual.nome}</span>
+              </p>
+            )}
+          </div>
+
+          {usuarios.length > 0 ? (
+            <div className="flex items-center gap-2">
+              <User size={16} className="text-cinema-muted" />
+              <select
+                value={usuarioId}
+                onChange={e => setUsuarioId(e.target.value)}
+                className="bg-cinema-elevated border border-cinema-border text-cinema-primary rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-cinema-gold transition-colors"
+              >
+                {usuarios.map(u => (
+                  <option key={u.id} value={u.id}>{u.nome}</option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            <p className="text-cinema-muted text-xs">
+              Cadastre um usuário na aba Admin para usar favoritos.
+            </p>
+          )}
+        </div>
+
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {Array.from({ length: 10 }).map((_, i) => <SkeletonCard key={i} />)}
@@ -87,12 +204,16 @@ export default function Catalogo() {
             action={{ label: 'Limpar filtros', onClick: handleClear }}
           />
         ) : (
-          <>
-            <p className="text-cinema-muted text-xs mb-4">{obras.length} obra{obras.length !== 1 ? 's' : ''} encontrada{obras.length !== 1 ? 's' : ''}</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {obras.map(obra => <ObraCard key={obra.id} obra={obra} />)}
-            </div>
-          </>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {obras.map(obra => (
+              <ObraCard
+                key={obra.id}
+                obra={obra}
+                isFavorito={favoritosIds.includes(obra.id)}
+                onToggleFavorito={handleToggleFavorito}
+              />
+            ))}
+          </div>
         )}
       </div>
     </div>

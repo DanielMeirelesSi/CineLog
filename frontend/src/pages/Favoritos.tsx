@@ -15,28 +15,62 @@ export default function Favoritos() {
   const { showToast } = useToast()
 
   useEffect(() => {
-    listarUsuarios().then(lista => {
-      setUsuarios(lista)
-      if (lista.length > 0) setUsuarioId(lista[0].id)
-    }).catch(() => {})
+    listarUsuarios()
+      .then(lista => {
+        setUsuarios(lista)
+
+        const usuarioSalvo = localStorage.getItem('cinelog_usuario_ativo')
+        const usuarioExiste = lista.some(u => u.id === usuarioSalvo)
+
+        if (usuarioSalvo && usuarioExiste) {
+          setUsuarioId(usuarioSalvo)
+        } else if (lista.length > 0) {
+          setUsuarioId(lista[0].id)
+          localStorage.setItem('cinelog_usuario_ativo', lista[0].id)
+        }
+      })
+      .catch(() => {
+        setUsuarios([])
+        setUsuarioId('')
+      })
   }, [])
 
   useEffect(() => {
-    if (!usuarioId) return
+    if (!usuarioId) {
+      setFavoritos([])
+      return
+    }
+
+    localStorage.setItem('cinelog_usuario_ativo', usuarioId)
+
     setLoading(true)
+
     obterFavoritos(usuarioId)
       .then(setFavoritos)
-      .catch(() => setFavoritos([]))
+      .catch(() => {
+        setFavoritos([])
+        showToast('Erro ao carregar favoritos.', 'error')
+      })
       .finally(() => setLoading(false))
-  }, [usuarioId])
+  }, [usuarioId, showToast])
+
+  const handleTrocarUsuario = (novoUsuarioId: string) => {
+    setUsuarioId(novoUsuarioId)
+    localStorage.setItem('cinelog_usuario_ativo', novoUsuarioId)
+  }
 
   const handleRemover = async (obraId: string) => {
+    if (!usuarioId) {
+      showToast('Selecione um usuário antes de remover favoritos.', 'error')
+      return
+    }
+
     try {
       await removerFavorito(usuarioId, obraId)
       setFavoritos(prev => prev.filter(f => f.id !== obraId))
-      showToast('Removido dos favoritos', 'info')
+      showToast('Removido dos favoritos.', 'info')
     } catch {
-      showToast('Erro ao remover favorito', 'error')
+      showToast('Erro ao remover favorito.', 'error')
     }
   }
 
@@ -50,25 +84,40 @@ export default function Favoritos() {
           <Heart size={22} className="text-cinema-red fill-cinema-red" />
           FAVORITOS
         </h1>
-        {usuarios.length > 0 && (
+
+        {usuarios.length > 0 ? (
           <select
             value={usuarioId}
-            onChange={e => setUsuarioId(e.target.value)}
+            onChange={e => handleTrocarUsuario(e.target.value)}
             className="bg-cinema-elevated border border-cinema-border text-cinema-primary rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-cinema-gold transition-colors"
           >
             {usuarios.map(u => (
-              <option key={u.id} value={u.id}>{u.nome}</option>
+              <option key={u.id} value={u.id}>
+                {u.nome}
+              </option>
             ))}
           </select>
+        ) : (
+          <span className="text-cinema-muted text-sm">
+            Nenhum usuário cadastrado.
+          </span>
         )}
+
         {usuario && (
           <span className="text-cinema-muted text-sm ml-auto">
+            Usuário: <span className="text-cinema-gold">{usuario.nome}</span> ·{' '}
             {favoritos.length} favorito{favoritos.length !== 1 ? 's' : ''}
           </span>
         )}
       </div>
 
-      {loading ? (
+      {usuarios.length === 0 ? (
+        <EmptyState
+          icon={Heart}
+          title="NENHUM USUÁRIO CADASTRADO"
+          description="Cadastre um usuário na aba Admin para usar a lista de favoritos."
+        />
+      ) : loading ? (
         <Spinner />
       ) : favoritos.length === 0 ? (
         <EmptyState

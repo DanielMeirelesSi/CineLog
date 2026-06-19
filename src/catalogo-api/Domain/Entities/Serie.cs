@@ -1,4 +1,5 @@
 using CatalogoApi.Domain.Enums;
+using CatalogoApi.Domain.Exceptions;
 
 namespace CatalogoApi.Domain.Entities;
 
@@ -23,9 +24,11 @@ public class Serie : ObraAudiovisual
         DateTime createdAt)
         : base(id, titulo, genero, anoLancamento, sinopse, avaliacao, createdAt)
     {
+        ValidarDadosSerie(numeroTemporadas, numeroEpisodiosPorTemporada, criador);
+
         NumeroTemporadas = numeroTemporadas;
         NumeroEpisodiosPorTemporada = numeroEpisodiosPorTemporada;
-        Criador = criador;
+        Criador = criador.Trim();
         Status = status;
     }
 
@@ -44,10 +47,30 @@ public class Serie : ObraAudiovisual
         StatusSerie status,
         DateTime updatedAt)
     {
+        ValidarDadosSerie(numeroTemporadas, numeroEpisodiosPorTemporada, criador);
+
         AtualizarDadosBase(titulo, genero, anoLancamento, sinopse, avaliacao, updatedAt);
         NumeroTemporadas = numeroTemporadas;
         NumeroEpisodiosPorTemporada = numeroEpisodiosPorTemporada;
-        Criador = criador;
+        Criador = criador.Trim();
         Status = status;
+    }
+
+    private static void ValidarDadosSerie(
+        int numeroTemporadas,
+        int numeroEpisodiosPorTemporada,
+        string criador)
+    {
+        if (numeroTemporadas <= 0)
+            throw new DomainException("O número de temporadas deve ser maior que zero.");
+
+        if (numeroEpisodiosPorTemporada <= 0)
+            throw new DomainException("O número de episódios por temporada deve ser maior que zero.");
+
+        if (string.IsNullOrWhiteSpace(criador))
+            throw new DomainException("O criador da série é obrigatório.");
+
+        if (criador.Trim().Length > 150)
+            throw new DomainException("O nome do criador deve ter no máximo 150 caracteres.");
     }
 }

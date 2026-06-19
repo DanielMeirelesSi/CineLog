@@ -40,15 +40,28 @@
   },
   {
     "DuracaoMinutos": 90,
-    "Diretor": "daniel",
+    "Diretor": "Daniel",
     "Classificacao": "Livre",
     "Id": "b9c708ed-6fa7-458c-8d5d-e6991dd6af14",
-    "Titulo": "superman",
+    "Titulo": "Superman",
     "Genero": "Acao",
     "AnoLancamento": 2026,
     "Sinopse": "oioi",
     "Avaliacao": 7,
     "CreatedAt": "2026-06-19T18:31:17.631129Z",
-    "UpdatedAt": "2026-06-19T18:31:17.631129Z"
+    "UpdatedAt": "2026-06-19T18:44:46.7627958Z"
+  },
+  {
+    "DuracaoMinutos": 90,
+    "Diretor": "Daniel",
+    "Classificacao": "Livre",
+    "Id": "6c4f04ab-5cdc-4cc0-84be-a27a9939129e",
+    "Titulo": "Ben 10",
+    "Genero": "Acao",
+    "AnoLancamento": 2026,
+    "Sinopse": null,
+    "Avaliacao": 10,
+    "CreatedAt": "2026-06-19T18:44:31.3807219Z",
+    "UpdatedAt": "2026-06-19T18:44:31.3807219Z"
   }
 ]

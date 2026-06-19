@@ -1,4 +1,5 @@
 using CatalogoApi.Domain.Enums;
+using CatalogoApi.Domain.Exceptions;
 
 namespace CatalogoApi.Domain.Entities;
 
@@ -22,11 +23,13 @@ public abstract class ObraAudiovisual
         decimal avaliacao,
         DateTime createdAt)
     {
+        ValidarDadosBase(titulo, anoLancamento, sinopse, avaliacao);
+
         Id = id;
-        Titulo = titulo;
+        Titulo = titulo.Trim();
         Genero = genero;
         AnoLancamento = anoLancamento;
-        Sinopse = sinopse;
+        Sinopse = string.IsNullOrWhiteSpace(sinopse) ? null : sinopse.Trim();
         Avaliacao = avaliacao;
         CreatedAt = createdAt;
         UpdatedAt = createdAt;
@@ -42,11 +45,35 @@ public abstract class ObraAudiovisual
         decimal avaliacao,
         DateTime updatedAt)
     {
-        Titulo = titulo;
+        ValidarDadosBase(titulo, anoLancamento, sinopse, avaliacao);
+
+        Titulo = titulo.Trim();
         Genero = genero;
         AnoLancamento = anoLancamento;
-        Sinopse = sinopse;
+        Sinopse = string.IsNullOrWhiteSpace(sinopse) ? null : sinopse.Trim();
         Avaliacao = avaliacao;
         UpdatedAt = updatedAt;
+    }
+
+    private static void ValidarDadosBase(
+        string titulo,
+        int anoLancamento,
+        string? sinopse,
+        decimal avaliacao)
+    {
+        if (string.IsNullOrWhiteSpace(titulo))
+            throw new DomainException("O título da obra é obrigatório.");
+
+        if (titulo.Trim().Length > 200)
+            throw new DomainException("O título da obra deve ter no máximo 200 caracteres.");
+
+        if (anoLancamento < 1888 || anoLancamento > 2100)
+            throw new DomainException("O ano de lançamento deve estar entre 1888 e 2100.");
+
+        if (!string.IsNullOrWhiteSpace(sinopse) && sinopse.Trim().Length > 2000)
+            throw new DomainException("A sinopse deve ter no máximo 2000 caracteres.");
+
+        if (avaliacao < 0 || avaliacao > 10)
+            throw new DomainException("A avaliação deve estar entre 0 e 10.");
     }
 }

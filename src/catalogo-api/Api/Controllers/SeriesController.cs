@@ -9,6 +9,7 @@ namespace CatalogoApi.Api.Controllers;
 
 [ApiController]
 [Route("series")]
+[Route("api/series")]
 [Produces("application/json")]
 [Consumes("application/json")]
 public class SeriesController(ISerieService serieService) : ControllerBase

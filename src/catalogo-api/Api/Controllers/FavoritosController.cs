@@ -6,6 +6,7 @@ namespace CatalogoApi.Api.Controllers;
 
 [ApiController]
 [Route("usuarios/{usuarioId:guid}/favoritos")]
+[Route("api/usuarios/{usuarioId:guid}/favoritos")]
 [Produces("application/json")]
 public class FavoritosController(IUsuarioService usuarioService) : ControllerBase
 {

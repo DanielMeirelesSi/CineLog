@@ -8,6 +8,7 @@ namespace CatalogoApi.Api.Controllers;
 
 [ApiController]
 [Route("usuarios")]
+[Route("api/usuarios")]
 [Produces("application/json")]
 [Consumes("application/json")]
 public class UsuariosController(IUsuarioService usuarioService) : ControllerBase

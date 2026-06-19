@@ -9,6 +9,7 @@ namespace CatalogoApi.Api.Controllers;
 
 [ApiController]
 [Route("filmes")]
+[Route("api/filmes")]
 [Produces("application/json")]
 [Consumes("application/json")]
 public class FilmesController(IFilmeService filmeService) : ControllerBase

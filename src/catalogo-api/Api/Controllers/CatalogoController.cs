@@ -7,6 +7,7 @@ namespace CatalogoApi.Api.Controllers;
 
 [ApiController]
 [Route("catalogo")]
+[Route("api/catalogo")]
 [Produces("application/json")]
 public class CatalogoController(ICatalogoService catalogoService) : ControllerBase
 {

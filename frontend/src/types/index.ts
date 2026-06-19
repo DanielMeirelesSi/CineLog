@@ -54,3 +54,18 @@ export interface Usuario {
   totalFavoritos: number
   createdAt: string
 }
+export interface Avaliacao {
+  id: string
+  usuarioId: string
+  nomeUsuario: string
+  obraId: string
+  tituloObra: string
+  nota: number
+  comentario?: string
+  createdAt: string
+}
+
+export interface CriarAvaliacaoPayload {
+  nota: number
+  comentario?: string
+}

@@ -6,5 +6,21 @@
     "Nota": 8,
     "Comentario": "top",
     "CreatedAt": "2026-06-19T19:57:41.9716705Z"
+  },
+  {
+    "Id": "1089d147-7431-4d0b-a4b2-1b092a5c1490",
+    "UsuarioId": "ccb97a9e-fdc8-4a87-865f-08f64f787927",
+    "ObraId": "40767818-f563-4ddb-8cfe-4f7bb5f74b34",
+    "Nota": 10,
+    "Comentario": "Top",
+    "CreatedAt": "2026-06-19T20:04:47.2506237Z"
+  },
+  {
+    "Id": "6c4274aa-7bc5-441c-a4bc-36432ec42b1d",
+    "UsuarioId": "d785ca86-e33c-4737-88c0-363b736ffb93",
+    "ObraId": "40767818-f563-4ddb-8cfe-4f7bb5f74b34",
+    "Nota": 1,
+    "Comentario": "paia",
+    "CreatedAt": "2026-06-19T20:06:05.5513437Z"
   }
 ]

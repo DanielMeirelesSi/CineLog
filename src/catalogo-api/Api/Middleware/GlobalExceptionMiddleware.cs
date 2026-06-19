@@ -26,10 +26,12 @@ public class GlobalExceptionMiddleware(RequestDelegate next)
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex);
+
             await EscreverErro(
                 context,
                 StatusCodes.Status500InternalServerError,
-                $"Erro interno: {ex.Message}");
+                "Ocorreu um erro interno no servidor.");
         }
     }
 

@@ -44,10 +44,14 @@ builder.Services.AddSingleton<UsuarioRepository>();
 builder.Services.AddSingleton<IUsuarioRepository>(sp => sp.GetRequiredService<UsuarioRepository>());
 builder.Services.AddSingleton<IRepository<Usuario>>(sp => sp.GetRequiredService<UsuarioRepository>());
 
+builder.Services.AddSingleton<AvaliacaoRepository>();
+builder.Services.AddSingleton<IRepository<Avaliacao>>(sp => sp.GetRequiredService<AvaliacaoRepository>());
+
 builder.Services.AddSingleton<ICatalogoService, CatalogoService>();
 builder.Services.AddSingleton<IFilmeService, FilmeService>();
 builder.Services.AddSingleton<ISerieService, SerieService>();
 builder.Services.AddSingleton<IUsuarioService, UsuarioService>();
+builder.Services.AddSingleton<IAvaliacaoService, AvaliacaoService>();
 
 WebApplication app = builder.Build();
 

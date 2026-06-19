@@ -35,6 +35,15 @@ public abstract class ObraAudiovisual
         UpdatedAt = createdAt;
     }
 
+    public void AtualizarAvaliacao(decimal avaliacao, DateTime updatedAt)
+    {
+        if (avaliacao < 0 || avaliacao > 10)
+            throw new DomainException("A avaliação média deve estar entre 0 e 10.");
+
+        Avaliacao = avaliacao;
+        UpdatedAt = updatedAt;
+    }
+
     public abstract string ObterDetalhes();
 
     protected void AtualizarDadosBase(

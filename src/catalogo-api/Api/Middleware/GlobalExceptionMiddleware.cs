@@ -24,9 +24,12 @@ public class GlobalExceptionMiddleware(RequestDelegate next)
         {
             await EscreverErro(context, StatusCodes.Status422UnprocessableEntity, ex.Message);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            await EscreverErro(context, StatusCodes.Status500InternalServerError, "Ocorreu um erro interno no servidor.");
+            await EscreverErro(
+                context,
+                StatusCodes.Status500InternalServerError,
+                $"Erro interno: {ex.Message}");
         }
     }
 
@@ -34,8 +37,12 @@ public class GlobalExceptionMiddleware(RequestDelegate next)
     {
         context.Response.StatusCode = statusCode;
         context.Response.ContentType = "application/json";
+
         ErroResponse erro = new(mensagem, []);
-        string json = JsonSerializer.Serialize(erro, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        string json = JsonSerializer.Serialize(
+            erro,
+            new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+
         await context.Response.WriteAsync(json);
     }
 }

@@ -74,6 +74,13 @@ static void SeedData(WebApplication app)
     ISerieService serieService = app.Services.GetRequiredService<ISerieService>();
     IUsuarioService usuarioService = app.Services.GetRequiredService<IUsuarioService>();
 
+        if (filmeService.ListarTodos().Any() ||
+        serieService.ListarTodos().Any() ||
+        usuarioService.ListarTodos().Any())
+            {
+                return;
+            }
+
     Filme matrix = filmeService.Criar("Matrix", Genero.SciFi, 1999,
         "Um hacker descobre que a realidade em que vive é uma simulação criada por máquinas.",
         8.7m, 136, "Lana Wachowski", ClassificacaoEtaria.Quatorze);

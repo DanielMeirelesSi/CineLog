@@ -1,0 +1,24 @@
+[
+  {
+    "Id": "d785ca86-e33c-4737-88c0-363b736ffb93",
+    "Nome": "Lucas Adelino",
+    "Email": "lucas@catalogo.com",
+    "Favoritos": [
+      "40767818-f563-4ddb-8cfe-4f7bb5f74b34",
+      "6242efa2-9330-480d-a749-8d289e411008",
+      "fccb13ad-02d0-47c5-a821-c9e72b1cd49e"
+    ],
+    "CreatedAt": "2026-06-19T18:30:13.6883221Z"
+  },
+  {
+    "Id": "635bbaf9-0a8d-4ddc-8d2c-5b22a268bff9",
+    "Nome": "Ana Silva",
+    "Email": "ana@catalogo.com",
+    "Favoritos": [
+      "86bfad70-bfbc-4491-9944-cbf21a503647",
+      "bcc2a2f7-9aab-4b4f-83ec-32f0783c74ae",
+      "28513bb1-101f-4aef-b8ea-8e4e43dd8bb6"
+    ],
+    "CreatedAt": "2026-06-19T18:30:13.6916623Z"
+  }
+]

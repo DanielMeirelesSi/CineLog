@@ -1,0 +1,44 @@
+[
+  {
+    "NumeroTemporadas": 5,
+    "NumeroEpisodiosPorTemporada": 13,
+    "Criador": "Vince Gilligan",
+    "Status": "Finalizada",
+    "Id": "6242efa2-9330-480d-a749-8d289e411008",
+    "Titulo": "Breaking Bad",
+    "Genero": "Drama",
+    "AnoLancamento": 2008,
+    "Sinopse": "Um professor de qu\u00EDmica diagnosticado com c\u00E2ncer terminal se torna fabricante de metanfetamina.",
+    "Avaliacao": 9.5,
+    "CreatedAt": "2026-06-19T18:30:13.6793147Z",
+    "UpdatedAt": "2026-06-19T18:30:13.6793147Z"
+  },
+  {
+    "NumeroTemporadas": 4,
+    "NumeroEpisodiosPorTemporada": 9,
+    "Criador": "Irm\u00E3os Duffer",
+    "Status": "Finalizada",
+    "Id": "bcc2a2f7-9aab-4b4f-83ec-32f0783c74ae",
+    "Titulo": "Stranger Things",
+    "Genero": "SciFi",
+    "AnoLancamento": 2016,
+    "Sinopse": "Um grupo de crian\u00E7as investiga o desaparecimento de um amigo e enfrenta for\u00E7as sobrenaturais.",
+    "Avaliacao": 8.7,
+    "CreatedAt": "2026-06-19T18:30:13.6864232Z",
+    "UpdatedAt": "2026-06-19T18:30:13.6864232Z"
+  },
+  {
+    "NumeroTemporadas": 2,
+    "NumeroEpisodiosPorTemporada": 9,
+    "Criador": "Craig Mazin",
+    "Status": "EmAndamento",
+    "Id": "fccb13ad-02d0-47c5-a821-c9e72b1cd49e",
+    "Titulo": "The Last of Us",
+    "Genero": "Thriller",
+    "AnoLancamento": 2023,
+    "Sinopse": "Em um mundo p\u00F3s-apocal\u00EDptico tomado por infectados, um sobrevivente protege uma adolescente imune.",
+    "Avaliacao": 8.8,
+    "CreatedAt": "2026-06-19T18:30:13.6872418Z",
+    "UpdatedAt": "2026-06-19T18:30:13.6872418Z"
+  }
+]

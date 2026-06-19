@@ -1,0 +1,54 @@
+[
+  {
+    "DuracaoMinutos": 136,
+    "Diretor": "Lana Wachowski",
+    "Classificacao": "Quatorze",
+    "Id": "40767818-f563-4ddb-8cfe-4f7bb5f74b34",
+    "Titulo": "Matrix",
+    "Genero": "SciFi",
+    "AnoLancamento": 1999,
+    "Sinopse": "Um hacker descobre que a realidade em que vive \u00E9 uma simula\u00E7\u00E3o criada por m\u00E1quinas.",
+    "Avaliacao": 8.7,
+    "CreatedAt": "2026-06-19T18:30:13.6257381Z",
+    "UpdatedAt": "2026-06-19T18:30:13.6257381Z"
+  },
+  {
+    "DuracaoMinutos": 142,
+    "Diretor": "Robert Zemeckis",
+    "Classificacao": "Dez",
+    "Id": "86bfad70-bfbc-4491-9944-cbf21a503647",
+    "Titulo": "Forrest Gump",
+    "Genero": "Drama",
+    "AnoLancamento": 1994,
+    "Sinopse": "A jornada extraordin\u00E1ria de um homem simples que testemunhou os grandes eventos do s\u00E9culo XX.",
+    "Avaliacao": 8.8,
+    "CreatedAt": "2026-06-19T18:30:13.6776608Z",
+    "UpdatedAt": "2026-06-19T18:30:13.6776608Z"
+  },
+  {
+    "DuracaoMinutos": 116,
+    "Diretor": "Robert Zemeckis",
+    "Classificacao": "Livre",
+    "Id": "28513bb1-101f-4aef-b8ea-8e4e43dd8bb6",
+    "Titulo": "De Volta para o Futuro",
+    "Genero": "Aventura",
+    "AnoLancamento": 1985,
+    "Sinopse": "Um adolescente viaja acidentalmente para o passado em um DeLorean modificado.",
+    "Avaliacao": 8.5,
+    "CreatedAt": "2026-06-19T18:30:13.6783618Z",
+    "UpdatedAt": "2026-06-19T18:30:13.6783618Z"
+  },
+  {
+    "DuracaoMinutos": 90,
+    "Diretor": "daniel",
+    "Classificacao": "Livre",
+    "Id": "b9c708ed-6fa7-458c-8d5d-e6991dd6af14",
+    "Titulo": "superman",
+    "Genero": "Acao",
+    "AnoLancamento": 2026,
+    "Sinopse": "oioi",
+    "Avaliacao": 7,
+    "CreatedAt": "2026-06-19T18:31:17.631129Z",
+    "UpdatedAt": "2026-06-19T18:31:17.631129Z"
+  }
+]
